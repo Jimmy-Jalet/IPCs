@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     int ret;
     // creation de la file
     clef = ftok("/tmp/5678", 'a'); // generation d'une clef
-    idFile = msgget(clef, IPC_CREAT | IPC_EXCL);
+    idFile = msgget(clef, IPC_CREAT | 0666);
     if (idFile == -1) {
         if (errno != EEXIST) {
             printf("pb msgget : %s\n", strerror(errno));

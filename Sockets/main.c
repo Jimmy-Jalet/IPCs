@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     // init serveur
     infosServeur.sin_family = AF_INET;
     infosServeur.sin_port = htons(2222); // port dans l'ordre reseau
-    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.150");
+    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.102");
 
     //client : envoie un entier
     valEnvoyee = 666;

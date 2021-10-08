@@ -27,9 +27,9 @@ int main(int argc, char** argv) {
     // init serveur
     infosServeur.sin_family = AF_INET;
     infosServeur.sin_port = htons(3333); // port dans l'ordre reseau
-    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.150");
+    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.104");
 
-    //client : envoie un entier
+    //client : envoie un reel
     valEnvoyee = 6.8;
     retour = sendto(sock, &valEnvoyee, sizeof (valEnvoyee), 0, (struct sockaddr *)&infosServeur, sizeof (infosServeur));
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
         printf("pb sendto : %s\n", strerror(errno));
         exit(errno);
     }
-    //serveur : affiche l'entier reçu
+    //serveur : affiche le reel reçu
     
     retour = recvfrom(sock, &valRecu, sizeof (valRecu), 0, (struct sockaddr *)&infosReception,&taille);
 
@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
         exit(errno);
     }
     printf("Reponse du serveur : %f\n",valRecu);
-    //serveur : envoie l'inverse de l'entier
+    //serveur : envoie l'inverse du reel
     //client : affiche ce que le serveur a envoyé
     return (EXIT_SUCCESS);
 }

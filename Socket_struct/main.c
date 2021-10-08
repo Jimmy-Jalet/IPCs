@@ -8,23 +8,28 @@
 #include <string.h>
 #include <errno.h>
 
-
-
+typedef struct {
+    unsigned char jour;
+    unsigned char mois;
+    unsigned short int annee;
+    char jourDeLaSemaine[10]; // le jour en toute lettre
+} datePerso;
 
 int main(int argc, char** argv) {
     float valEnvoyee, valRecu;
     float sock;
     float retour;
     struct sockaddr_in infosServeur;
-     struct sockaddr_in infosReception;
-     socklen_t taille;
-     datePerso date_1;
-     date_1.annee = 2021;
-     date_1.jour = 06;
-     date_1.mois = 10;
-     date_1.jourDeLaSemaine = "Mercredi";
-     
-     
+    struct sockaddr_in infosReception;
+    socklen_t taille;
+    datePerso date_1;
+    date_1.annee = 2021;
+    date_1.jour = 8;
+    date_1.mois = 10;
+    strcpy(date_1.jourDeLaSemaine, "Vendredi");
+
+
+
     //creation socket
     sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock == -1) {
@@ -33,34 +38,21 @@ int main(int argc, char** argv) {
     }
     // init serveur
     infosServeur.sin_family = AF_INET;
-    infosServeur.sin_port = htons(3333); // port dans l'ordre reseau
-    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.150");
+    infosServeur.sin_port = htons(4444); // port dans l'ordre reseau
+    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.104");
 
-    //client : envoie un entier
-    valEnvoyee = 6.8;
-    retour = sendto(sock, &valEnvoyee, sizeof (valEnvoyee), 0, (struct sockaddr *)&infosServeur, sizeof (infosServeur));
+    //client : la date
+    retour = sendto(sock, &date_1, sizeof (date_1), 0, (struct sockaddr *) &infosServeur, sizeof (infosServeur));
 
     if (retour == -1) {
         printf("pb sendto : %s\n", strerror(errno));
         exit(errno);
     }
-    //serveur : affiche l'entier reçu
-    
-    retour = recvfrom(sock, &valRecu, sizeof (valRecu), 0, (struct sockaddr *)&infosReception,&date_1 );
 
-    if (retour == -1) {
-        printf("pb recvfrom : %s\n", strerror(errno));
-        exit(errno);
-    }
-    //serveur : envoie l'inverse de l'entier
-    //client : affiche ce que le serveur a envoyé
+
+    
     return (EXIT_SUCCESS);
 }
 
-typedef struct {
-    unsigned char jour;
-    unsigned char mois;
-    unsigned short int annee;
-    char jourDeLaSemaine[10]; // le jour en toute lettre
-} datePerso;
+
 
