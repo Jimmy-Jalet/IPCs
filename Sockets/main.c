@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     // init serveur
     infosServeur.sin_family = AF_INET;
     infosServeur.sin_port = htons(5555); // port dans l'ordre reseau
-    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.150");
+    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.101");
 
     //client : envoie un entier
     
@@ -86,7 +86,6 @@ int main(int argc, char** argv) {
         printf("pb write : %s\n", strerror(errno));
         exit(errno);
     }
-    printf("Reponse du serveur : %d\n", valRecu);
     //serveur : envoie l'inverse de l'entier
     
     retour =  read( sock, &valRecu, taille);

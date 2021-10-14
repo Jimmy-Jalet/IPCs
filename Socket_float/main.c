@@ -51,8 +51,8 @@ int main(int argc, char** argv) {
     //client : affiche ce que le serveur a envoyé*/
     
     //TCP
+    int sock;
     float valEnvoyee, valRecu;
-    float sock;
     float retour;
     struct sockaddr_in infosServeur;
      struct sockaddr_in infosReception;
@@ -65,8 +65,8 @@ int main(int argc, char** argv) {
     }
     // init serveur
     infosServeur.sin_family = AF_INET;
-    infosServeur.sin_port = htons(6666); // port dans l'ordre reseau
-    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.150");
+    infosServeur.sin_port = htons(2222); // port dans l'ordre reseau
+    infosServeur.sin_addr.s_addr = inet_addr("172.18.58.90");
 
     //client : envoie un reel
     
@@ -79,13 +79,13 @@ int main(int argc, char** argv) {
     //serveur : affiche le reel reçu
     taille = sizeof(valEnvoyee);
     valEnvoyee = 6.8;
-    retour = write(sock, &valEnvoyee,taille);
+    retour = write(sock,(void *)&valEnvoyee,taille);
 
     if (retour == -1) {
         printf("pb write : %s\n", strerror(errno));
         exit(errno);
     }
-    printf("Reponse du serveur : %f\n",valRecu);
+   
     //serveur : envoie l'inverse du reel
     retour = read(sock, &valRecu,taille);
 
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
     }
     
     //client : affiche ce que le serveur a envoyé
-    
+     printf("Reponse du serveur : %f\n",valRecu);
     return (EXIT_SUCCESS);
 }
 
