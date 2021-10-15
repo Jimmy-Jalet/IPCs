@@ -41,7 +41,7 @@ void *thread3(void *arg) {
     printf("mise à jour de v1 avec la valeur %d\n", *ptr);
     partage.v3 = ptr;
     pthread_exit(NULL);
-}/
+}
 
 void *threadMulti(void *arg) {
     laStruct *ptr = (laStruct *) arg;
